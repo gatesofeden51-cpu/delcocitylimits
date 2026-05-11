@@ -1,0 +1,687 @@
+/* Delco City Limits — festival palette & typography
+ * Font files live in /fonts/ — see README for filenames.
+ */
+
+@font-face {
+  font-family: "TAN Nimbus";
+  src:
+    url("../fonts/TAN-NIMBUS.woff2") format("woff2"),
+    url("../fonts/TAN-NIMBUS.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Hangyaboly;
+  src: url("../fonts/Hangyaboly.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lazy Dog";
+  src: url("../fonts/lazy_dog.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --color-green: #05a776;
+  --color-sky: #7adbec;
+  --color-red: #fd3f34;
+  --color-yellow: #ffde59;
+  --color-cream: #f9f1ed;
+  --color-ink: #030200;
+  --color-orange: #e85d04;
+
+  --font-display: "TAN Nimbus", "Arial Black", "Helvetica Neue", sans-serif;
+  --font-tagline: "TAN Nimbus", "Arial Black", "Helvetica Neue", sans-serif;
+  --font-lazy-dog: "Lazy Dog", "Trebuchet MS", sans-serif;
+  --font-lineup: Hangyaboly, "Trebuchet MS", sans-serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --border-banner: 2px solid var(--color-ink);
+  --radius-panel: 12px;
+  --max-content: 42rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--color-ink);
+  background: var(--color-sky);
+}
+
+/* Home page: corner stars + bottom art on a fixed layer (z-index 0); text in header/main/footer stays above. */
+body.page-home {
+  background-color: var(--color-sky);
+  position: relative;
+}
+
+body.page-home::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    url("../assets/single_yellow_star.png"),
+    url("../assets/single_yellow_star.png"),
+    url("../assets/single_yellow_star.png"),
+    url("../assets/single_yellow_star.png"),
+    url("../assets/drum_pad.png"),
+    url("../assets/dj_booth.png");
+  background-position:
+    left 2% top 5.5rem,
+    right 2% top 5.5rem,
+    left 2% bottom 3%,
+    right 2% bottom 3%,
+    left -6% bottom -5%,
+    right -7% bottom -4%;
+  background-repeat: no-repeat;
+  background-size:
+    min(15vw, 92px) auto,
+    min(15vw, 92px) auto,
+    min(15vw, 92px) auto,
+    min(15vw, 92px) auto,
+    min(40vw, 300px) auto,
+    min(40vw, 300px) auto;
+}
+
+@media (max-width: 640px) {
+  body.page-home::before {
+    background-position:
+      left 1% top 5rem,
+      right 1% top 5rem,
+      left 1% bottom 2%,
+      right 1% bottom 2%,
+      left -14% bottom -10%,
+      right -14% bottom -8%;
+    background-size:
+      min(20vw, 72px) auto,
+      min(20vw, 72px) auto,
+      min(20vw, 72px) auto,
+      min(20vw, 72px) auto,
+      min(58vw, 200px) auto,
+      min(56vw, 200px) auto;
+  }
+}
+
+/* Shrunk row of stars between lineup and date/location banners */
+.home-stars-rule {
+  height: clamp(2rem, 6vw, 3.25rem);
+  margin: 0.5rem auto 1.35rem;
+  max-width: min(28rem, 88vw);
+  background-image: url("../assets/row_of_stars_overlapping.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  pointer-events: none;
+}
+
+body.page-home > .site-main,
+body.page-home > .site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Keep the guitar/backdrop art behind neighboring copy if it overflows the block. */
+body.page-home .site-main > *:not(.logistics-backdrop) {
+  position: relative;
+  z-index: 1;
+}
+
+body.page-home .site-main > .logistics-backdrop {
+  z-index: 0;
+}
+
+a {
+  color: var(--color-red);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--color-green);
+}
+
+/* --- Layout chrome --- */
+
+.site-header {
+  background: var(--color-cream);
+  border-bottom: var(--border-banner);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.site-header__inner {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.site-logo {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--color-red);
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+.site-logo:hover {
+  color: var(--color-green);
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  font-family: var(--font-tagline);
+  font-size: 0.95rem;
+}
+
+.site-nav a {
+  color: var(--color-ink);
+  text-decoration: none;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+}
+
+.site-nav a:hover {
+  border-bottom-color: var(--color-green);
+  color: var(--color-ink);
+}
+
+.site-nav a[aria-current="page"] {
+  border-bottom-color: var(--color-red);
+  font-weight: 700;
+}
+
+.site-main {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.site-footer {
+  background: var(--color-cream);
+  border-top: var(--border-banner);
+  padding: 1.25rem 1rem;
+  margin-top: auto;
+}
+
+.site-footer__inner {
+  max-width: 56rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-tagline {
+  font-family: var(--font-lazy-dog);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 0.35rem;
+  color: var(--color-ink);
+}
+
+.footer-credit {
+  margin: 0;
+  font-family: var(--font-lazy-dog);
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.home-blurb .footer-tagline.home-afters {
+  font-family: var(--font-tagline);
+}
+
+/* --- Components --- */
+
+.panel {
+  background: var(--color-cream);
+  border: var(--border-banner);
+  border-radius: var(--radius-panel);
+  padding: 1.25rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.banner {
+  display: block;
+  padding: 0.65rem 1rem;
+  border: var(--border-banner);
+  text-align: center;
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.banner--rounded {
+  border: none;
+  border-radius: 16px;
+}
+
+.banner--yellow {
+  background: var(--color-yellow);
+  color: var(--color-ink);
+}
+
+.banner--sky {
+  background: var(--color-sky);
+  color: var(--color-ink);
+}
+
+a.banner {
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+a.banner:hover {
+  filter: brightness(0.97);
+}
+
+a.banner:focus-visible {
+  outline: 3px solid var(--color-red);
+  outline-offset: 3px;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 8vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.05;
+  margin: 0 0 0.5rem;
+  color: var(--color-red);
+  text-align: center;
+}
+
+.hero-sub {
+  font-family: var(--font-lazy-dog);
+  font-size: clamp(0.75rem, 2vw, 0.95rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 1rem;
+  color: var(--color-ink);
+}
+
+.section-label {
+  font-family: var(--font-tagline);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+  color: var(--color-ink);
+}
+
+.lineup-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-lineup);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.45;
+}
+
+.lineup-list li {
+  padding: 0.2rem 0;
+  border-bottom: 1px dashed rgba(3, 2, 0, 0.2);
+}
+
+.lineup-list li:last-child {
+  border-bottom: none;
+}
+
+.lineup-list--home {
+  text-align: center;
+  margin: 0 auto 0;
+  max-width: 38rem;
+}
+
+/* Guitar sits behind date/location banners (banners keep their own solid fills). */
+.logistics-backdrop {
+  position: relative;
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: clamp(1.25rem, 4vw, 2rem) clamp(0.5rem, 3vw, 1rem);
+}
+
+.logistics-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("../assets/guitar.png") center center / contain no-repeat;
+  opacity: 1;
+  transform: scale(1.25);
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+.logistics-backdrop .banner-stack--home {
+  position: relative;
+  z-index: 1;
+}
+
+.lineup-list--home li {
+  border-bottom: none;
+  padding: 0.2rem 0;
+}
+
+.lineup-tier-1 {
+  font-size: clamp(1.45rem, 5vw, 2rem);
+}
+
+.lineup-tier-2 {
+  font-size: clamp(1.1rem, 3.6vw, 1.48rem);
+}
+
+.lineup-tier-3 {
+  font-size: clamp(0.88rem, 2.6vw, 1.12rem);
+}
+
+.banner-stack--home {
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.banner-stack--home .banner {
+  border: none;
+  border-radius: 16px;
+  font-family: var(--font-lazy-dog);
+  font-weight: 400;
+  font-size: clamp(0.85rem, 2.2vw, 1rem);
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.banner-stack--home .banner--sky {
+  background: var(--color-cream);
+  box-shadow: inset 0 0 0 1px rgba(3, 2, 0, 0.06);
+}
+
+.banner-stack--home .banner-map-link {
+  color: inherit;
+}
+
+.banner-stack--home .banner-map-link:hover {
+  color: inherit;
+}
+
+.banner-stack--home .banner-map-link:focus-visible {
+  outline: 3px solid var(--color-red);
+  outline-offset: 3px;
+}
+
+.home-blurb {
+  text-align: center;
+  max-width: var(--max-content);
+  margin: 0 auto 0.5rem;
+}
+
+.home-blurb__text {
+  margin: 0 0 0.75rem;
+}
+
+.home-afters {
+  margin: 0;
+  letter-spacing: 0.12em;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  border: var(--border-banner);
+  font-family: var(--font-tagline);
+  font-size: 0.95rem;
+  text-decoration: none;
+  color: var(--color-ink);
+  background: var(--color-yellow);
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.btn:hover {
+  background: var(--color-green);
+  color: var(--color-cream);
+  transform: translateY(-1px);
+}
+
+.btn--secondary {
+  background: var(--color-sky);
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  color: var(--color-red);
+  margin: 0 0 0.75rem;
+  line-height: 1.1;
+}
+
+.lede {
+  font-family: var(--font-lineup);
+  margin: 0 0 1.25rem;
+  max-width: var(--max-content);
+}
+
+.disclaimer {
+  font-family: var(--font-lazy-dog);
+  font-size: 1.25rem;
+  opacity: 0.95;
+  text-align: center;
+  margin: 1rem 0 0;
+  padding: 0.75rem;
+  border-left: 4px solid var(--color-green);
+  background: rgba(249, 241, 237, 0.7);
+}
+
+/* Set times */
+.schedule {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: var(--font-lineup);
+  font-size: 1.05rem;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.schedule th,
+.schedule td {
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(3, 2, 0, 0.15);
+}
+
+.schedule th {
+  font-size: 1.25rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(255, 222, 89, 0.35);
+  color: var(--color-ink);
+}
+
+.schedule .recording {
+  color: rgba(3, 2, 0, 0.88);
+}
+
+.schedule tbody tr:hover {
+  background: rgba(249, 241, 237, 0.5);
+}
+
+@media (max-width: 520px) {
+  .schedule thead {
+    display: none;
+  }
+
+  .schedule tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: var(--border-banner);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--color-cream);
+  }
+
+  .schedule td {
+    display: block;
+    border: none;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .schedule td::before {
+    content: attr(data-label);
+    display: block;
+    font-family: var(--font-lineup);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 0.2rem;
+  }
+}
+
+/* FAQ */
+.faq-item {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px dashed rgba(3, 2, 0, 0.2);
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.faq-item h2 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem;
+  color: var(--color-ink);
+}
+
+.faq-item p {
+  font-family: var(--font-lineup);
+  margin: 0 0 0.5rem;
+}
+
+.faq-item p:last-child {
+  margin-bottom: 0;
+}
+
+.deco-burst {
+  color: var(--color-green);
+  font-size: 1.2rem;
+  letter-spacing: 0.2em;
+}
+
+.banner-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-sub--spaced {
+  margin-bottom: 1.25rem;
+}
+
+.home-celebration-box {
+  margin: 0 auto 0.65rem;
+  max-width: 36rem;
+  padding: 1rem 1.35rem;
+  border-radius: 16px;
+  background: var(--color-orange);
+}
+
+/* .hero-sub {
+  font-family: var(--font-lazy-dog);
+  font-size: clamp(0.75rem, 2vw, 0.95rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 1rem;
+  color: var(--color-ink);
+} */
+
+.home-celebration {
+  font-family: var(--font-lazy-dog);
+  font-size: clamp(1rem, 2.8vw, 1.35rem);
+  line-height: 1.4;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0;
+  color: var(--color-ink);
+}
+
+.first-set-callout {
+  margin: 0.85rem auto 1.1rem;
+  max-width: 28rem;
+  text-align: center;
+  font-family: var(--font-tagline);
+  font-size: clamp(0.8rem, 2vw, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.mt-section {
+  margin-top: 1.5rem;
+}
+
+.afters-line {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+.panel--flush {
+  padding: 0;
+  overflow: hidden;
+}
+
+body.layout-stretch {
+  display: flex;
+  flex-direction: column;
+}
+
+body.layout-stretch .site-main {
+  flex: 1;
+}
